@@ -73,7 +73,7 @@ func (repositorio CategoriaRepositorio) ObtenerCategorias(nombre string) ([]mode
 	return categorias, nil
 }
 
-func (repositorio ProductoRepositorio) ObtenerCategoriaPorId(id primitive.ObjectID) (model.Categoria, error) {
+func (repositorio CategoriaRepositorio) ObtenerCategoriaPorId(id primitive.ObjectID) (model.Categoria, error) {
 	colecion := repositorio.db.GetClient().Database("abm_productos").Collection("categorias")
 	filtro := bson.M{"_id": id}
 	var categoria model.Categoria
