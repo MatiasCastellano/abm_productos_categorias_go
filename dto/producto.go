@@ -14,3 +14,8 @@ type ProductoRespuesta struct {
 	Precio      float64            `json:"precio"`
 	Categoria   CategoriaRespuesta `json:"categoria"`
 }
+
+type FiltroProducto struct {
+	Nombre string  `json:"nombre"`
+	Precio float64 `json:"precio"`
+}
