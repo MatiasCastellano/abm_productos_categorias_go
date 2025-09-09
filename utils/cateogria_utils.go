@@ -12,3 +12,9 @@ func ConvertirCategoriaModelADto(categoria model.Categoria) dto.CategoriaRespues
 		ID:          categoria.ID.Hex(),
 	}
 }
+func ConvertirCategoriaDTOAModel(categoria dto.CategoriaPeticion) model.Categoria {
+	return model.Categoria{
+		Nombre:      categoria.Nombre,
+		Descripcion: categoria.Descripcion,
+	}
+}

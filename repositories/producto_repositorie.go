@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"abm_productos_categorias_go/database"
+	"abm_productos_categorias_go/dto"
 	"abm_productos_categorias_go/model"
 	"context"
 
@@ -14,7 +15,7 @@ type ProductoRepositorioInterface interface {
 	CrearProducto(producto model.Producto) (*mongo.InsertOneResult, error)
 	EliminarProducto(Id primitive.ObjectID) (*mongo.DeleteResult, error)
 	ActualizarProducto(producto model.Producto) (*mongo.UpdateResult, error)
-	ObtenerProductos(nombre string, precio float64) ([]model.Producto, error)
+	ObtenerProductos(filtros dto.FiltroProducto) ([]model.Producto, error)
 	ObtenerProductoPorId(id primitive.ObjectID) (model.Producto, error)
 }
 
@@ -52,14 +53,14 @@ func (repositorio ProductoRepositorio) ActualizarProducto(producto model.Product
 	return resultado, err
 }
 
-func (repositorio ProductoRepositorio) ObtenerProductos(nombre string, precio float64) ([]model.Producto, error) {
+func (repositorio ProductoRepositorio) ObtenerProductos(filtros dto.FiltroProducto) ([]model.Producto, error) {
 	coleccion := repositorio.db.GetClient().Database("abm_productos").Collection("productos")
 	filtro := bson.M{}
-	if nombre != "" {
-		filtro[nombre] = bson.M{"$regex": nombre, "$options": "i"}
+	if filtros.Nombre != "" {
+		filtro["nombre"] = bson.M{"$regex": filtros.Nombre, "$options": "i"}
 	}
-	if precio >= 0 {
-		filtro["precio"] = bson.M{"$gt": precio}
+	if filtros.Precio >= 0 {
+		filtro["precio"] = bson.M{"$gt": filtros.Precio}
 	}
 	cursor, err := coleccion.Find(context.TODO(), filtro)
 	if err != nil {

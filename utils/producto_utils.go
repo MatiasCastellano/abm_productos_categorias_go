@@ -20,7 +20,7 @@ func ConvertirDtoAModel(producto dto.ProductoPeticion) (model.Producto, error) {
 	}, err
 }
 
-func ConvertirModelADto(producto model.Producto) dto.ProductoRespuesta { //ESTO IRIA EN EL SERVICE, EL CARGAR LA CATEGORIA EN LA RESPUESTA
+func ConvertirModelADto(producto model.Producto) dto.ProductoRespuesta {
 	return dto.ProductoRespuesta{
 		Nombre:      producto.Nombre,
 		Precio:      producto.Precio,
