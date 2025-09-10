@@ -4,7 +4,7 @@ type ProductoPeticion struct {
 	Nombre      string  `json:"nombre"`
 	Descripcion string  `json:"descripcion,omitempty"`
 	Precio      float64 `json:"precio"`
-	CategoriaID string  `json:"categoriaID"`
+	CategoriaID string  `json:"categoria_id"`
 }
 
 type ProductoRespuesta struct {
