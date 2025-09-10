@@ -29,12 +29,14 @@ func mappingRoutes() {
 	productos := router.Group("/productos")
 	{
 		productos.POST("", productoHandler.CrearProducto)
+		productos.GET("", productoHandler.ObtenerProductos)
+		productos.GET("/:id", productoHandler.ObtenerProductoPorId)
 	}
 
 	categorias := router.Group("/categorias")
 	{
 		categorias.POST("", categoriaHandler.CrearCategoria)
-		categorias.GET("", categoriaHandler.ObtenerCategorias)
+		categorias.GET("/:id", categoriaHandler.ObtenerCategorias)
 	}
 }
 
