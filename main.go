@@ -34,6 +34,7 @@ func mappingRoutes() {
 	categorias := router.Group("/categorias")
 	{
 		categorias.POST("", categoriaHandler.CrearCategoria)
+		categorias.GET("", categoriaHandler.ObtenerCategorias)
 	}
 }
 
