@@ -31,3 +31,14 @@ func (handler *CategoriaHandler) CrearCategoria(c *gin.Context) {
 	}
 	c.JSON(http.StatusCreated, categoria)
 }
+
+func (handler *CategoriaHandler) ObtenerCategorias(c *gin.Context) {
+	var solicitud dto.FiltroProducto
+	solicitud.Nombre = c.Query("nombre")
+	categorias, err := handler.service.ObtenerCategorias(solicitud)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, categorias)
+}

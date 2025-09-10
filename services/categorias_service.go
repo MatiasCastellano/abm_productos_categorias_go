@@ -11,6 +11,8 @@ import (
 
 type CategoriaInterface interface {
 	CrearCategoria(categoria dto.CategoriaPeticion) (dto.CategoriaRespuesta, error)
+	ObtenerCategoriaPorId(id string) (dto.CategoriaRespuesta, error)
+	ObtenerCategorias(filtro dto.FiltroProducto) ([]dto.CategoriaRespuesta, error)
 }
 
 type CategoriaService struct {
@@ -44,4 +46,16 @@ func (service *CategoriaService) ObtenerCategoriaPorId(id string) (dto.Categoria
 		return dto.CategoriaRespuesta{}, errors.New("Categoria NO encontrada con el siguiente ID :" + id)
 	}
 	return utils.ConvertirCategoriaModelADto(model), nil
+}
+
+func (service *CategoriaService) ObtenerCategorias(filtro dto.FiltroProducto) ([]dto.CategoriaRespuesta, error) {
+	categorias, err := service.repositories.ObtenerCategorias(filtro.Nombre)
+	if err != nil {
+		return []dto.CategoriaRespuesta{}, err
+	}
+	var resultado []dto.CategoriaRespuesta
+	for _, cat := range categorias {
+		resultado = append(resultado, utils.ConvertirCategoriaModelADto(cat))
+	}
+	return resultado, nil
 }

@@ -54,7 +54,7 @@ func (repositorio CategoriaRepositorio) ObtenerCategorias(nombre string) ([]mode
 	colecion := repositorio.db.GetClient().Database("abm_productos").Collection("categorias")
 	filtro := bson.M{}
 	if nombre != "" {
-		filtro[nombre] = bson.M{"$regex": nombre, "$options": "i"}
+		filtro["nombre"] = bson.M{"$regex": nombre, "$options": "i"}
 	}
 	cursor, err := colecion.Find(context.TODO(), filtro)
 	if err != nil {
