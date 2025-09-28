@@ -60,3 +60,28 @@ func (handlers *ProductosHandlres) ObtenerProductoPorId(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, producto)
 }
+
+func (handler *ProductosHandlres) ActualizarProducto(c *gin.Context) {
+	var solicitud dto.ProductoPeticion
+	id := c.Param("id")
+	if err := c.ShouldBindJSON(&solicitud); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"Error": err.Error()})
+		return
+	}
+	Producto, err := handler.service.ActualizarProducto(id, solicitud)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"Error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, Producto)
+}
+
+func (handler *ProductosHandlres) EliminarProducto(c *gin.Context) {
+	id := c.Param("id")
+	err := handler.service.EliminarProducto(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"Error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"Resultado": "Se elimino correctamente"})
+}
